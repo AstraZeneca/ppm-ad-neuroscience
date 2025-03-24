@@ -43,5 +43,5 @@ plt.tight_layout()
 plt.show()
 
 # Save the plot
-output_path = 'figures/ScatterPlot_GMDensity_vs_β-Amyloid_for_PPM-stratified groups.eps'
+output_path = 'figures/ScatterPlot_GMDensity_vs_beta-Amyloid_for_PPM-stratified_groups.eps'
 fig.savefig(output_path, format='eps')
