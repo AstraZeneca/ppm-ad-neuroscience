@@ -75,5 +75,9 @@ summary_table <- new_table_amyloid_all %>%
   ) %>%
   arrange(ad_category, Treatment_Information, time_point)
 
+# Save summary table as CSV
+output_path_table <- "figures/amyloid_summary_table.csv"
+write.csv(summary_table, file = output_path_table, row.names = FALSE)
+
 # Print the summary table
 print(summary_table)

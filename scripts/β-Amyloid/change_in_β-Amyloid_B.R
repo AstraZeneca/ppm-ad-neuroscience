@@ -113,6 +113,12 @@ combined_data <- data.frame(
   X50mg_SE = c(3.785883, 3.446617, 2.838849)
 )
 
+# Specify the output file path
+output_path <- "figures/summary_amyloid_change.csv"
+
+# Write combined_data to CSV
+write.csv(combined_data, file = output_path, row.names = FALSE)
+
 # Function to create a plot for a specific Ad_Category
 plot_category <- function(category) {
   data_to_plot <- combined_data[combined_data$Ad_Category == category,]
@@ -160,24 +166,6 @@ output_path_plot <- "figures/change_bar_amyloid_plot.eps"
 ggsave(output_path_plot, plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
 
 print(combined_plot)
-
-# Provided data
-combined_data <- data.frame(
-  Ad_Category = c("Slow", "Rapid", "All Progressive"),
-  Placebo_Difference = c(3.3189086, -3.7684220, -0.2247567),
-  Placebo_SE = c(4.190017, 3.970093, 3.171685),
-  X20mg_Difference = c(-8.521253, -21.666951, -15.094102),
-  X20mg_SE = c(4.914002, 3.453145, 2.942220),
-  X50mg_Difference = c(-12.75434, -25.54914, -19.15174),
-  X50mg_SE = c(3.785883, 3.446617, 2.838849)
-)
-
-# Specify the output file path
-output_path <- "figures/summary_amyloid_change.csv"
-
-# Write combined_data to CSV
-write.csv(combined_data, file = output_path, row.names = FALSE)
-
 
 plot_category_boxplot <- function(data, ad_category){
     # Remove duplicate rows

@@ -118,6 +118,12 @@ combined_data_cdr <- data.frame(
   X50mg_SE = c(0.3703584, 0.3973194, 0.2150399)
 )
 
+# Specify the output file path
+output_path <- "figures/summary_CDR-SOB_change.csv"
+
+# Write combined_data to CSV
+write.csv(combined_data_cdr, file = output_path, row.names = FALSE)
+
 # Function to create a plot for a specific Ad_Category
 plot_category_cdr <- function(category) {
   data_to_plot <- combined_data_cdr[combined_data_cdr$Ad_Category == category,]
@@ -172,18 +178,6 @@ summary_table_cdr <- combined_data_cdr %>%
 
 # Print the summary table
 print(summary_table_cdr)
-
-
-# Provided data for CDR_SOB
-combined_data_cdr <- data.frame(
-  Ad_Category = c("Slow", "Rapid", "All Progressive"),
-  Placebo_Difference = c(2.533938, 2.771261, 2.657619),
-  Placebo_SE = c(0.4867404, 0.3532423, 0.2029657),
-  X20mg_Difference = c(2.013262, 2.883725, 2.521315),
-  X20mg_SE = c(0.6664145, 0.3406049, 0.2185000),
-  X50mg_Difference = c(1.154116, 3.107167, 2.215955),
-  X50mg_SE = c(0.3703584, 0.3973194, 0.2150399)
-)
 
 plot_category_boxplot <- function(data, ad_category){
     # Remove duplicate rows

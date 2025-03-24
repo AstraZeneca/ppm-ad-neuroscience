@@ -92,6 +92,12 @@ combined_data_adas <- data.frame(
   X50mg_SE = c(1.694144, 1.511651, 1.214135)
 )
 
+# Specify the output file path
+output_path <- "figures/summary_ADAS-Cog13_change.csv"
+
+# Write combined_data to CSV
+write.csv(combined_data_adas, file = output_path, row.names = FALSE)
+
 # Function to create a bar plot for a specific Ad_Category
 plot_category <- function(category) {
   data_to_plot <- combined_data_adas[combined_data_adas$Ad_Category == category, ]
