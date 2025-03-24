@@ -1,3 +1,9 @@
+# Script Description:
+# This script analyzes changes in ADAS-Cog13 scores over time for different treatment groups
+#It calculates mean differences, standard errors, and generates
+# bar plots and box plots to visualize the results. The script also saves the generated plots
+# as EPS files for publication purposes.
+
 # Load required packages
 library(dplyr)
 library(ggplot2)

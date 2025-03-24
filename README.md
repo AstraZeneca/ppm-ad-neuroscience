@@ -2,18 +2,12 @@
 
 This repository contains R and Python scripts for generating figures and performing analyses related to the manuscript titled **"AI-guided patient stratification improves outcomes and efficiency of Alzheimer’s Disease clinical trials"**.
 
+## Abstract
+
+Alzheimer’s Disease (AD) drug discovery has been hampered by patient heterogeneity, and the lack of sensitive tools for precise stratification at early dementia stages. Here, we demonstrate that a robust and interpretable AI-guided tool (predictive prognostic model, PPM) improves outcomes and decreases trial sample size by enhancing patient stratification precision for the AMARANTH trial of lanabecestat . Despite the fact that the trial was deemed futile, using the PPM— pre-trained on research data— to re-stratify patients based on baseline trial data showed significant treatment effects: reduction in β-amyloid and 46% slowing of cognitive decline for slow progressive individuals at earlier stages of neurodegeneration compared to rapid progressive individuals that did not show significant change in cognitive outcomes. Our results provide evidence for AI-guided patient stratification that is more precise than standard patient selection approaches (e.g. β-amyloid positivity) and has strong potential to enhance efficiency and efficacy of future AD trials. 
+
 ## Overview
-
-The code base is designed to support the findings and visualizations presented in the manuscript. It includes:
-
-- **R Scripts**: For statistical analysis and figure generation.
-- **Python Scripts**: For data preprocessing, machine learning models, and additional analyses.
-
-## Project Description
-
-This project leverages artificial intelligence (AI) to improve patient stratification in Alzheimer’s Disease (AD) clinical trials. By using advanced machine learning techniques and statistical analyses, the project aims to enhance trial efficiency and outcomes by identifying subgroups of patients who are more likely to respond to specific treatments.
-
-The repository includes tools for data preprocessing, model training, evaluation, and visualization of results. The methods and findings are aligned with the manuscript to ensure reproducibility and transparency.
+The code base is designed to support the findings and visualizations presented in the manuscript.
 
 ## Software Requirements
 

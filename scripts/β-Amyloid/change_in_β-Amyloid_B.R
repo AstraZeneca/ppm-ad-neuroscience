@@ -1,3 +1,9 @@
+# This script calculates and visualizes the differences in β-Amyloid levels between time points for various treatment groups 
+# and PPM-stratified groups.
+# It includes functions for calculating mean differences, standard errors, and generating bar and box plots.
+# The script also saves the results as plots and tables for further analysis.
+# Libraries used: dplyr, ggplot2, patchwork
+
 # Load required packages
 library(dplyr)
 library(ggplot2)

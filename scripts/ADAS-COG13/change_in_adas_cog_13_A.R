@@ -1,3 +1,7 @@
+# Script Description:
+# This script processes ADAS-Cog13 data to calculate changes over time and generate
+# visualizations for different PPM-stratified group  and treatment groups. It creates line plots
+# to show trends and saves the results as EPS files and summary tables for further analysis.
 
 # Load necessary libraries
 library(ggplot2)

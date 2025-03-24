@@ -1,3 +1,8 @@
+# This script analyzes changes in β-Amyloid levels over time for different treatment groups and PPM-stratified groups.
+# It includes data preprocessing, calculation of changes, and visualization of trends using line plots.
+# The script also generates summary statistics and saves the results as plots and tables.
+# Libraries used: ggplot2, dplyr, patchwork
+
 # Load necessary libraries
 library(ggplot2)
 library(dplyr)
@@ -69,8 +74,6 @@ summary_table <- new_table_amyloid_all %>%
     se_Amyloid_Beta = sd(Amyloid_Beta, na.rm = TRUE) / sqrt(n())
   ) %>%
   arrange(ad_category, Treatment_Information, time_point)
-
-
 
 # Print the summary table
 print(summary_table)

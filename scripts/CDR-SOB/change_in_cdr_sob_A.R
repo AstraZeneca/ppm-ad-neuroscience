@@ -1,3 +1,8 @@
+# This script visualizes the progression of CDR-SOB
+# scores over time for different treatment groups and PPM-stratified groups.
+# It generates line plots with error bars and saves the results as figures.
+# Additionally, it calculates and saves summary statistics for further analysis.
+
 # Load necessary libraries
 library(ggplot2)
 library(dplyr)

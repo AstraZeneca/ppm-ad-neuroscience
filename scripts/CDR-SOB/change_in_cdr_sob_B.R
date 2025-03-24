@@ -1,3 +1,9 @@
+# This script analyzes changes in CDR-SOB scores
+# across different treatment groups and PPM-stratified groups.
+# It calculates mean differences, standard errors, and generates visualizations such as
+# bar plots and box plots to compare the effects of treatments on CDR-SOB changes.
+# The results are saved as figures and summary tables for further analysis.
+
 # Load required packages
 library(dplyr)
 library(ggplot2)
