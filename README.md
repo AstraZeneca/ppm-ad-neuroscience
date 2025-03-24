@@ -30,15 +30,15 @@ The repository is organized as follows:
 - **/data/**: Placeholder for input datasets (not included in the repository due to privacy concerns).
 - **/figures/**: Directory for storing output files, including figures and model results.
 - **/notebooks/**: Jupyter notebooks for statistical analysis and figure generation.
-- **/scripts/ADAS-COG13: scripts for generating change in ADAS-COG13 across PPM-stratified group, treatment and timepoint
-- **/scripts/CDR-SOB: scripts for generating change in CDR-SOB across PPM-stratified group, treatment and timepoint
-- **/scripts/β-Amyloid: scripts for generating change in β-Amyloid across PPM-stratified group, treatment and timepoint
-- **/scripts/alluvial_plot.py: generating Sankey diagrams to visualize the transitions between PPM-stratified group 
-(Slow and Rapid) from baseline to follow-up for different treatment groups
-- **/scripts/distribution_plot.py: generating a black-and-white horizontal box plot of normalized PPM-derived prognostic index
-for different treatment groups 
-- **/scripts/scatter_plot.py: generating a scatter plot to visualize the relationship between 
-β-Amyloid levels and GM Density for different PPM-stratified groups
+- **/scripts/ADAS-COG13/**: Scripts for generating change in ADAS-COG13 across PPM-stratified group, treatment, and timepoint.
+- **/scripts/CDR-SOB/**: Scripts for generating change in CDR-SOB across PPM-stratified group, treatment, and timepoint.
+- **/scripts/β-Amyloid/**: Scripts for generating change in β-Amyloid across PPM-stratified group, treatment, and timepoint.
+- **/scripts/alluvial_plot.py**: Script for generating Sankey diagrams to visualize the transitions between PPM-stratified groups 
+  (Slow and Rapid) from baseline to follow-up for different treatment groups.
+- **/scripts/distribution_plot.py**: Script for generating a black-and-white horizontal box plot of normalized PPM-derived prognostic index
+  for different treatment groups.
+- **/scripts/scatter_plot.py**: Script for generating a scatter plot to visualize the relationship between 
+  β-Amyloid levels and GM Density for different PPM-stratified groups.
 - **README.md**: Documentation for the repository.
 
 ## How to Use the Code
