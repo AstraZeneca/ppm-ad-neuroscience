@@ -42,6 +42,22 @@ boxplot = plt.boxplot(
     medianprops=dict(color='black'),  # Median line style
     showfliers=True  # Show outliers (set to False to hide them)
 )
+# Extract metadata from the box plot
+metadata = {
+    "Group": ['Placebo', '20mg', '50mg'],
+    "Median": [line.get_xdata()[0] for line in boxplot['medians']],  # Extract median values
+    "Q1 (25th Percentile)": [patch.get_path().vertices[0][0] for patch in boxplot['boxes']],  # Extract Q1
+    "Q3 (75th Percentile)": [patch.get_path().vertices[2][0] for patch in boxplot['boxes']],  # Extract Q3
+    "Lower Whisker": [line.get_xdata()[1] for line in boxplot['whiskers'][::2]],  # Extract lower whisker
+    "Upper Whisker": [line.get_xdata()[1] for line in boxplot['whiskers'][1::2]],  # Extract upper whisker
+    "Outliers": [line.get_xdata().tolist() for line in boxplot['fliers']]  # Extract outliers
+}
+
+# Convert metadata to a DataFrame
+metadata_df = pd.DataFrame(metadata)
+
+# Save metadata to a CSV file
+metadata_df.to_csv('figures/boxplot_ppm_prognostic_index_at_baseline_metadata.csv', index=False)
 
 # Customize the plot appearance
 plt.xlabel('PPM-derived Prognostic Index', fontsize=14)  # X-axis label
