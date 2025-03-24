@@ -1,11 +1,11 @@
 """
-This script generates Sankey diagrams to visualize the transitions between Alzheimer's Disease (AD) 
-categories (Slow and Rapid) from baseline to follow-up for different treatment groups. The data 
-is sourced from CSV files containing baseline and follow-up AD category information, as well as 
+This script generates Sankey diagrams to visualize the transitions between PPM-stratified group 
+(Slow and Rapid) from baseline to follow-up for different treatment groups. The data 
+is sourced from CSV files containing baseline and follow-up PPM-stratified group information, as well as 
 treatment details. The diagrams are saved as EPS files for each treatment group.
 
 Key functionalities:
-- Load and preprocess AD category and treatment data.
+- Load and preprocess PPM-stratified group and treatment data.
 - Combine baseline and follow-up categories into a single column for analysis.
 - Generate Sankey diagrams to represent transitions between categories for each treatment group.
 - Save the diagrams as high-resolution EPS files.

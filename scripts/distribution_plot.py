@@ -4,7 +4,7 @@ for different treatment groups using Matplotlib.
 
 Usage:
 - Ensure the input CSV file ('data/df_adscore_all.csv') exists and contains the required columns:
-  '3' (for normalization) and 'Treatment Information' (categorical data for grouping).
+  '3' (for  PPM-derived prognostic index) and 'Treatment Information' (categorical data for grouping).
 - The output plot will be saved as an EPS file in the 'figures' directory.
 
 Dependencies:

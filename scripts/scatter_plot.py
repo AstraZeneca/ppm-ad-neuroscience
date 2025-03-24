@@ -1,6 +1,6 @@
 """
 This script generates a scatter plot to visualize the relationship between 
-β-Amyloid levels and GM Density for different Alzheimer's disease progression categories.
+β-Amyloid levels and GM Density for different PPM-stratified groups.
 The plot is saved as an EPS file.
 """
 
