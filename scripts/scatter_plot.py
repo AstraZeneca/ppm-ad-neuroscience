@@ -1,8 +1,6 @@
-"""
-This script generates a scatter plot to visualize the relationship between 
+"""This script generates a scatter plot to visualize the relationship between 
 β-Amyloid levels and GM Density for different PPM-stratified groups.
-The plot is saved as an EPS file.
-"""
+The plot is saved as an EPS file."""
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -45,5 +43,5 @@ plt.tight_layout()
 plt.show()
 
 # Save the plot
-output_path = 'figures/all_treatments_noface_colors_alpha_0.6.eps'
+output_path = 'figures/ScatterPlot_GMDensity_vs_β-Amyloid_for_PPM-stratified groups.eps'
 fig.savefig(output_path, format='eps')

@@ -53,7 +53,7 @@ plt.gca().spines['right'].set_visible(False)  # Hide the right spine
 
 # Save the figure as an EPS file
 plt.tight_layout()  # Adjust layout to prevent clipping
-plt.savefig('figures/boxplot_ppm_prognostic_index_bw_matplotlib.eps', format='eps', dpi=300)
+plt.savefig('figures/boxplot_ppm_prognostic_index_at_baseline.eps', format='eps', dpi=300)
 
 # Display the plot
 plt.show()

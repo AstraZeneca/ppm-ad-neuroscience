@@ -10,9 +10,9 @@ Key functionalities:
 - Generate Sankey diagrams to represent transitions between categories for each treatment group.
 - Save the diagrams as high-resolution EPS files.
 """
-
 import pandas as pd
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
 # Load the baseline and follow-up AD category data
 df = pd.read_csv('data/baseline_followup_adcategory.csv')
@@ -88,5 +88,5 @@ for treat in treatment:
         font_size=14,
         width=800  # Specify the desired width of the plot
     )
-    fig.write_image(f'figures/sankey_{treat}_new_patient_transition.eps', format='eps', engine='kaleido', scale=3)
+    fig.write_image(f'figures/AlluvialPlot_Changes_in_PPM-guided_stratification_due_to_{treat}.eps', format='eps', engine='kaleido', scale=3)
     fig.show()
