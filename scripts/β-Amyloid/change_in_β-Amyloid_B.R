@@ -93,6 +93,12 @@ combined_data <- data.frame(
   `50mg_SE` = diff_data_se_50mg$SE
 )
 
+# Specify the output file path
+output_path <- "figures/summary_beta-amyloid_change.csv"
+
+# Write combined_data to CSV
+write.csv(combined_data, file = output_path, row.names = FALSE)
+
 cat("Amyloid_Beta\n")
 
 # Print the combined data table
@@ -101,23 +107,6 @@ print(combined_data)
 # Plot B-Amyloid change (main figure) and save figure and related table
 
 options(repr.plot.width = 18, repr.plot.height = 7)
-
-# Provided data
-combined_data <- data.frame(
-  Ad_Category = c("Slow", "Rapid", "All Progressive"),
-  Placebo_Difference = c(3.3189086, -3.7684220, -0.2247567),
-  Placebo_SE = c(4.190017, 3.970093, 3.171685),
-  X20mg_Difference = c(-8.521253, -21.666951, -15.094102),
-  X20mg_SE = c(4.914002, 3.453145, 2.942220),
-  X50mg_Difference = c(-12.75434, -25.54914, -19.15174),
-  X50mg_SE = c(3.785883, 3.446617, 2.838849)
-)
-
-# Specify the output file path
-output_path <- "figures/summary_amyloid_change.csv"
-
-# Write combined_data to CSV
-write.csv(combined_data, file = output_path, row.names = FALSE)
 
 # Function to create a plot for a specific Ad_Category
 plot_category <- function(category) {
@@ -151,6 +140,78 @@ plot_category <- function(category) {
   return(p)
 }
 
+
+# Generate plots for each category with modified colors and narrower bars
+plot_slow <- plot_category("Slow")
+plot_rapid <- plot_category("Rapid")
+plot_entire <- plot_category("All Progressive")
+
+# Arrange plots in a single row using patchwork
+combined_plot <- plot_slow + plot_rapid + plot_entire + plot_layout(ncol = 3)
+
+# # Save the combined plot as EPS
+# # Save the plot as EPS file
+output_path_plot <- "figures/change_bar_beta-amyloid_plot.eps"
+ggsave(output_path_plot, plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
+
+print(combined_plot)
+
+plot_category_boxplot <- function(data, ad_category){
+    # Remove duplicate rows
+    df_unique <- unique(data)
+
+    # Remove rows with NA values
+    df_clean <- na.omit(df_unique)
+    data_to_plot <- df_clean[df_clean$ad_category_1 == ad_category,]
+    
+    data_to_plot$Treatment_Information_1 <- factor(
+      data_to_plot$Treatment_Information_1,
+      levels = c("Placebo", "LY3314814-20mg", "LY3314814-50mg")
+    )
+  
+    p <- ggplot(data_to_plot, aes(x = Treatment_Information_1, y = Amyloid_change, fill = Treatment_Information_1)) +
+      geom_boxplot(outlier.shape = 16, outlier.size = 2.5) +
+      labs(title = ad_category, x = "Treatment", y = "Change in β-Amyloid") +
+      theme_minimal(base_size = 12) +
+      scale_fill_manual(values = c("Placebo" = "#7a7a7aff", "LY3314814-20mg" = "#3d6dd1ff", "LY3314814-50mg" = "#9b2de1ff")) +
+      
+    # Add x-axis and y-axis labels
+     theme_minimal(base_size = 12) +
+#      coord_cartesian(ylim = c(-80, 20)) +
+# Include tick marks for both axes
+      scale_y_continuous(name = "Change in β-Amyloid", breaks = seq(-100, 60, by = 20), limits = c(-120, 60)) +
+    
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            axis.title.x = element_text(size = 12),
+            axis.title.y = element_text(size = 12),
+            axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+            axis.text.y = element_text(size = 10),
+            axis.line = element_line(color = "black"),
+            legend.position = "none")
+    return(p)}
+
+# Generate box plot with category parameter
+# Create a duplicate of rows where ad_category_1 is "X" or "Y" and change it to "X+Y"
+df_dup <- amyloid_change_subset[amyloid_change_subset$ad_category_1 %in% c("Slow", "Rapid"), ]
+df_dup$ad_category_1 <- "All Progressive"
+
+# Combine the original data frame with the duplicates for "X+Y"
+df_combined <- rbind(amyloid_change_subset, df_dup)
+
+plot_slow_box <- plot_category_boxplot(df_combined, "Slow" )
+plot_rapid_box <- plot_category_boxplot(df_combined, "Rapid")
+plot_entire_box <- plot_category_boxplot(df_combined, "All Progressive")
+
+# Arrange plots in a single row using patchwork
+combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_layout(ncol = 3)
+
+# # Save the plot as EPS file
+output_path_plot <- "figures/change_box_beta-amyloid_plot.eps"
+ggsave(output_path_plot, plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
+
+# Print the combined box plots
+print(combined_plot_box)
 
 # Generate plots for each category with modified colors and narrower bars
 plot_slow <- plot_category("Slow")

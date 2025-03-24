@@ -68,7 +68,7 @@ diff_data_se_20mg <- calculate_means_differences(new_data, "LY3314814-20mg")
 diff_data_se_placebo <- calculate_means_differences(new_data, "Placebo")
 
 # Combine data into a single data frame
-combined_data <- data.frame(
+combined_data_adas <- data.frame(
   Ad_Category = diff_data_se_50mg$Ad_Category,
   Placebo_Difference = diff_data_se_placebo$Difference,
   Placebo_SE = diff_data_se_placebo$SE,
@@ -78,8 +78,14 @@ combined_data <- data.frame(
   `50mg_SE` = diff_data_se_50mg$SE
 )
 
+# Specify the output file path
+output_path <- "figures/summary_ADAS-Cog13_change.csv"
+
+# Write combined_data to CSV
+write.csv(combined_data_adas, file = output_path, row.names = FALSE)
+
 cat("ADAS-Cog13\n")
-print(combined_data)
+print(combined_data_adas)
 
 # Provided data for ADAS-Cog13
 combined_data_adas <- data.frame(
@@ -91,12 +97,6 @@ combined_data_adas <- data.frame(
   X50mg_Difference = c(4.952632, 12.187998, 8.570315),
   X50mg_SE = c(1.694144, 1.511651, 1.214135)
 )
-
-# Specify the output file path
-output_path <- "figures/summary_ADAS-Cog13_change.csv"
-
-# Write combined_data to CSV
-write.csv(combined_data_adas, file = output_path, row.names = FALSE)
 
 # Function to create a bar plot for a specific Ad_Category
 plot_category <- function(category) {
@@ -111,7 +111,7 @@ plot_category <- function(category) {
     geom_bar(stat = "identity", position = "dodge", width = 0.4) +
     geom_errorbar(aes(ymin = Difference - SE, ymax = Difference + SE),
                   position = position_dodge(width = 0.9), width = 0.25) +
-    labs(title = category, x = "Treatment", y = "Change in ADAS") +
+    labs(title = category, x = "Treatment", y = "Change in ADAS-Cog13") +
     theme_minimal(base_size = 12) +
     coord_cartesian(ylim = c(0, 15)) +
     scale_fill_manual(values = c("Placebo" = "#7a7a7aff", "20mg" = "#3d6dd1ff", "50mg" = "#9b2de1ff")) +
@@ -131,7 +131,7 @@ plot_rapid <- plot_category("Rapid")
 plot_entire <- plot_category("All Progressive")
 combined_plot <- plot_slow + plot_rapid + plot_entire + plot_layout(ncol = 3)
 
-ggsave("figures/change_bar_adas_plot.eps", plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
+ggsave("figures/change_bar_ADAS-Cog13_plot.eps", plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
 print(combined_plot)
 
 # Function to create box plots
@@ -144,10 +144,10 @@ plot_category_boxplot <- function(data, ad_category) {
   
   ggplot(data_to_plot, aes(x = Treatment_Information_1, y = ADAS_change, fill = Treatment_Information_1)) +
     geom_boxplot(outlier.shape = 16, outlier.size = 2.5) +
-    labs(title = ad_category, x = "Treatment", y = "Change in ADAS") +
+    labs(title = ad_category, x = "Treatment", y = "Change in ADAS-Cog13") +
     theme_minimal(base_size = 12) +
     scale_fill_manual(values = c("Placebo" = "#7a7a7aff", "LY3314814-20mg" = "#3d6dd1ff", "LY3314814-50mg" = "#9b2de1ff")) +
-    scale_y_continuous(name = "Change in ADAS", breaks = seq(-10, 40, by = 5), limits = c(-10, 40)) +
+    scale_y_continuous(name = "Change in ADAS-Cog13", breaks = seq(-10, 40, by = 5), limits = c(-10, 40)) +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           axis.title.x = element_text(size = 12),
@@ -168,6 +168,5 @@ plot_rapid_box <- plot_category_boxplot(df_combined, "Rapid")
 plot_entire_box <- plot_category_boxplot(df_combined, "All Progressive")
 combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_layout(ncol = 3)
 
-ggsave("figures/change_box_adas_plot.eps", plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
+ggsave("figures/change_box_ADAS-Cog13_plot.eps", plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
 print(combined_plot_box)
-

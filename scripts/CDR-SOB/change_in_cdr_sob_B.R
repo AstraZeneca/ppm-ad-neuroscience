@@ -89,7 +89,7 @@ diff_data_se_20mg <- calculate_means_differences(new_data, "LY3314814-20mg")
 diff_data_se_placebo <- calculate_means_differences(new_data, "Placebo")
 
 # Combine the data into a single data frame
-combined_data <- data.frame(
+combined_data_cdr <- data.frame(
   Ad_Category = diff_data_se_50mg$Ad_Category,
   Placebo_Difference = diff_data_se_placebo$Difference,
   Placebo_SE = diff_data_se_placebo$SE,
@@ -99,11 +99,16 @@ combined_data <- data.frame(
   `50mg_SE` = diff_data_se_50mg$SE
 )
 
-cat("CDR\n")
+cat("CDR-SOB\n")
 
 # Print the combined data table
-print(combined_data)
+print(combined_data_cdr)
 
+# Specify the output file path
+output_path <- "figures/summary_CDR-SOB_change.csv"
+
+# Write combined_data to CSV
+write.csv(combined_data_cdr, file = output_path, row.names = FALSE)
 
 # Plot CDR-SOB change (main figure) and save figure and related table
 
@@ -117,12 +122,6 @@ combined_data_cdr <- data.frame(
   X50mg_Difference = c(1.154116, 3.107167, 2.215955),
   X50mg_SE = c(0.3703584, 0.3973194, 0.2150399)
 )
-
-# Specify the output file path
-output_path <- "figures/summary_CDR-SOB_change.csv"
-
-# Write combined_data to CSV
-write.csv(combined_data_cdr, file = output_path, row.names = FALSE)
 
 # Function to create a plot for a specific Ad_Category
 plot_category_cdr <- function(category) {
@@ -159,7 +158,7 @@ plot_entire_cdr <- plot_category_cdr("All Progressive")
 combined_plot_cdr <- plot_slow_cdr + plot_rapid_cdr + plot_entire_cdr + plot_layout(ncol = 3)
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/change_bar_cdr_plot.eps"
+output_path_plot <- "figures/change_bar_CDR-SOB_plot.eps"
 ggsave(output_path_plot, plot = combined_plot_cdr, device = "eps", width = 14, height = 7, family = "serif")
 
 print(combined_plot_cdr)
@@ -231,7 +230,7 @@ combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_lay
 
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/change_box_cdr_plot.eps"
+output_path_plot <- "figures/change_box_CDR-SOB_plot.eps"
 ggsave(output_path_plot, plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
 
 # Print the combined box plots

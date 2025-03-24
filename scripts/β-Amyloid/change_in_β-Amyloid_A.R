@@ -63,7 +63,7 @@ p <- ggplot(new_table_amyloid_all, aes(x = time_point, y = Amyloid_Beta, group =
 print(p)
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/amyloid_plot.eps"
+output_path_plot <- "figures/beta-amyloid_plot.eps"
 ggsave(output_path_plot, plot = p, device = "eps", width = 14, height = 7, family = "serif")
 
 # Calculate means and standard errors
@@ -76,7 +76,7 @@ summary_table <- new_table_amyloid_all %>%
   arrange(ad_category, Treatment_Information, time_point)
 
 # Save summary table as CSV
-output_path_table <- "figures/amyloid_summary_table.csv"
+output_path_table <- "figures/beta-amyloid_summary_table.csv"
 write.csv(summary_table, file = output_path_table, row.names = FALSE)
 
 # Print the summary table
