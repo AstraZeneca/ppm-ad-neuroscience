@@ -105,7 +105,7 @@ cat("CDR-SOB\n")
 print(combined_data_cdr)
 
 # Specify the output file path
-output_path <- "figures/summary_CDR-SOB_change.csv"
+output_path <- "figures/Figure4_B_BarPlot.csv"
 
 # Write combined_data to CSV
 write.csv(combined_data_cdr, file = output_path, row.names = FALSE)
@@ -158,7 +158,7 @@ plot_entire_cdr <- plot_category_cdr("All Progressive")
 combined_plot_cdr <- plot_slow_cdr + plot_rapid_cdr + plot_entire_cdr + plot_layout(ncol = 3)
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/change_bar_CDR-SOB_plot.eps"
+output_path_plot <- "figures/Figure4_B_BarPlot.eps"
 ggsave(output_path_plot, plot = combined_plot_cdr, device = "eps", width = 14, height = 7, family = "serif")
 
 print(combined_plot_cdr)
@@ -230,8 +230,44 @@ combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_lay
 
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/change_box_CDR-SOB_plot.eps"
+output_path_plot <- "figures/Figure4_B.eps"
 ggsave(output_path_plot, plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
 
 # Print the combined box plots
 print(combined_plot_box)
+
+# Function to calculate box plot metadata
+calculate_boxplot_metadata <- function(data, ad_category) {
+  # Filter data for the specific category
+  data_to_plot <- na.omit(data[data$ad_category_1 == ad_category, ])
+  
+  # Calculate statistics for each treatment group
+  metadata <- data_to_plot %>%
+    group_by(Treatment_Information_1) %>%
+    summarise(
+      Median = median(CDR_SOB_change),
+      Q1 = quantile(CDR_SOB_change, 0.25),
+      Q3 = quantile(CDR_SOB_change, 0.75),
+      Lower_Whisker = max(min(CDR_SOB_change), Q1 - 1.5 * IQR(CDR_SOB_change)),
+      Upper_Whisker = min(max(CDR_SOB_change), Q3 + 1.5 * IQR(CDR_SOB_change)),
+      Outliers = paste(CDR_SOB_change[CDR_SOB_change < Q1 - 1.5 * IQR(CDR_SOB_change) | CDR_SOB_change > Q3 + 1.5 * IQR(CDR_SOB_change)], collapse = ";")
+    )
+  
+  # Add the category to the metadata
+  metadata$Ad_Category <- ad_category
+  return(metadata)
+}
+
+# Calculate metadata for each category
+metadata_slow <- calculate_boxplot_metadata(df_combined, "Slow")
+metadata_rapid <- calculate_boxplot_metadata(df_combined, "Rapid")
+metadata_all <- calculate_boxplot_metadata(df_combined, "All Progressive")
+
+# Combine metadata for all categories
+combined_metadata <- bind_rows(metadata_slow, metadata_rapid, metadata_all)
+
+# Save metadata to a CSV file
+write.csv(combined_metadata, "figures/Figure4_B.csv", row.names = FALSE)
+
+# Print the metadata to the console
+print(combined_metadata)

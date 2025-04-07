@@ -28,17 +28,20 @@ Ensure all dependencies are installed before running the scripts.
 The repository is organized as follows:
 
 - **/data/**: Placeholder for input datasets (not included in the repository due to privacy concerns).
+- **/manuscriptdata/SourceData.xlsx**: Data for all the figures associated with the manuscript.
 - **/figures/**: Directory for storing output files, including figures and model results.
 - **/notebooks/**: Jupyter notebooks for statistical analysis and figure generation.
-- **/scripts/ADAS-COG13/**: Scripts for generating change in ADAS-COG13 across PPM-stratified group, treatment, and timepoint.
-- **/scripts/CDR-SOB/**: Scripts for generating change in CDR-SOB across PPM-stratified group, treatment, and timepoint.
-- **/scripts/β-Amyloid/**: Scripts for generating change in β-Amyloid across PPM-stratified group, treatment, and timepoint.
-- **/scripts/alluvial_plot.py**: Script for generating Sankey diagrams to visualize the transitions between PPM-stratified groups 
+- **/scripts/ADAS-COG13/**: Scripts for generating changes in ADAS-COG13 across PPM-stratified groups, treatments, and timepoints.
+- **/scripts/CDR-SOB/**: Scripts for generating changes in CDR-SOB across PPM-stratified groups, treatments, and timepoints.
+- **/scripts/β-Amyloid/**: Scripts for generating changes in β-Amyloid across PPM-stratified groups, treatments, and timepoints.
+- **/scripts/alluvial_plot.py**: Script for generating Sankey diagrams to visualize transitions between PPM-stratified groups 
   (Slow and Rapid) from baseline to follow-up for different treatment groups.
 - **/scripts/distribution_plot.py**: Script for generating a black-and-white horizontal box plot of normalized PPM-derived prognostic index
   for different treatment groups.
 - **/scripts/scatter_plot.py**: Script for generating a scatter plot to visualize the relationship between 
   β-Amyloid levels and GM Density for different PPM-stratified groups.
+- **/scripts/power_curve_plot.R**: Script for generating power curves to evaluate statistical power across different sample sizes 
+  and treatment groups based on CDR-SOB changes.
 - **README.md**: Documentation for the repository.
 
 ## How to Use the Code

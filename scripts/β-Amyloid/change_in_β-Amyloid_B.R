@@ -94,7 +94,7 @@ combined_data <- data.frame(
 )
 
 # Specify the output file path
-output_path <- "figures/summary_beta-amyloid_change.csv"
+output_path <- "figures/Figure3_B_BarPlot.csv"
 
 # Write combined_data to CSV
 write.csv(combined_data, file = output_path, row.names = FALSE)
@@ -151,7 +151,7 @@ combined_plot <- plot_slow + plot_rapid + plot_entire + plot_layout(ncol = 3)
 
 # # Save the combined plot as EPS
 # # Save the plot as EPS file
-output_path_plot <- "figures/change_bar_beta-amyloid_plot.eps"
+output_path_plot <- "figures/Figure3_B_BarPlot.eps"
 ggsave(output_path_plot, plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
 
 print(combined_plot)
@@ -207,80 +207,44 @@ plot_entire_box <- plot_category_boxplot(df_combined, "All Progressive")
 combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_layout(ncol = 3)
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/change_box_beta-amyloid_plot.eps"
+output_path_plot <- "figures/Figure3_B.eps"
 ggsave(output_path_plot, plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
 
 # Print the combined box plots
 print(combined_plot_box)
 
-# Generate plots for each category with modified colors and narrower bars
-plot_slow <- plot_category("Slow")
-plot_rapid <- plot_category("Rapid")
-plot_entire <- plot_category("All Progressive")
-
-# Arrange plots in a single row using patchwork
-combined_plot <- plot_slow + plot_rapid + plot_entire + plot_layout(ncol = 3)
-
-# # Save the combined plot as EPS
-# # Save the plot as EPS file
-output_path_plot <- "figures/change_bar_amyloid_plot.eps"
-ggsave(output_path_plot, plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
-
-print(combined_plot)
-
-plot_category_boxplot <- function(data, ad_category){
-    # Remove duplicate rows
-    df_unique <- unique(data)
-
-    # Remove rows with NA values
-    df_clean <- na.omit(df_unique)
-    data_to_plot <- df_clean[df_clean$ad_category_1 == ad_category,]
-    
-    data_to_plot$Treatment_Information_1 <- factor(
-      data_to_plot$Treatment_Information_1,
-      levels = c("Placebo", "LY3314814-20mg", "LY3314814-50mg")
+# Function to calculate box plot metadata
+calculate_boxplot_metadata <- function(data, ad_category) {
+  # Filter data for the specific category
+  data_to_plot <- na.omit(data[data$ad_category_1 == ad_category, ])
+  
+  # Calculate statistics for each treatment group
+  metadata <- data_to_plot %>%
+    group_by(Treatment_Information_1) %>%
+    summarise(
+      Median = median(Amyloid_change),
+      Q1 = quantile(Amyloid_change, 0.25),
+      Q3 = quantile(Amyloid_change, 0.75),
+      Lower_Whisker = max(min(Amyloid_change), Q1 - 1.5 * IQR(Amyloid_change)),
+      Upper_Whisker = min(max(Amyloid_change), Q3 + 1.5 * IQR(Amyloid_change)),
+      Outliers = paste(Amyloid_change[Amyloid_change < Q1 - 1.5 * IQR(Amyloid_change) | Amyloid_change > Q3 + 1.5 * IQR(Amyloid_change)], collapse = ";")
     )
   
-    p <- ggplot(data_to_plot, aes(x = Treatment_Information_1, y = Amyloid_change, fill = Treatment_Information_1)) +
-      geom_boxplot(outlier.shape = 16, outlier.size = 2.5) +
-      labs(title = ad_category, x = "Treatment", y = "Change in β-Amyloid") +
-      theme_minimal(base_size = 12) +
-      scale_fill_manual(values = c("Placebo" = "#7a7a7aff", "LY3314814-20mg" = "#3d6dd1ff", "LY3314814-50mg" = "#9b2de1ff")) +
-      
-    # Add x-axis and y-axis labels
-     theme_minimal(base_size = 12) +
-#      coord_cartesian(ylim = c(-80, 20)) +
-# Include tick marks for both axes
-      scale_y_continuous(name = "Change in β-Amyloid", breaks = seq(-100, 60, by = 20), limits = c(-120, 60)) +
-    
-      theme(panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            axis.title.x = element_text(size = 12),
-            axis.title.y = element_text(size = 12),
-            axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
-            axis.text.y = element_text(size = 10),
-            axis.line = element_line(color = "black"),
-            legend.position = "none")
-    return(p)}
+  # Add the category to the metadata
+  metadata$Ad_Category <- ad_category
+  return(metadata)
+}
 
-# Generate box plot with category parameter
-# Create a duplicate of rows where ad_category_1 is "X" or "Y" and change it to "X+Y"
-df_dup <- amyloid_change_subset[amyloid_change_subset$ad_category_1 %in% c("Slow", "Rapid"), ]
-df_dup$ad_category_1 <- "All Progressive"
+# Calculate metadata for each category
+metadata_slow <- calculate_boxplot_metadata(df_combined, "Slow")
+metadata_rapid <- calculate_boxplot_metadata(df_combined, "Rapid")
+metadata_all <- calculate_boxplot_metadata(df_combined, "All Progressive")
 
-# Combine the original data frame with the duplicates for "X+Y"
-df_combined <- rbind(amyloid_change_subset, df_dup)
+# Combine metadata for all categories
+combined_metadata <- bind_rows(metadata_slow, metadata_rapid, metadata_all)
 
-plot_slow_box <- plot_category_boxplot(df_combined, "Slow" )
-plot_rapid_box <- plot_category_boxplot(df_combined, "Rapid")
-plot_entire_box <- plot_category_boxplot(df_combined, "All Progressive")
+# Save metadata to a CSV file
+write.csv(combined_metadata, "figures/Figure3_B.csv", row.names = FALSE)
 
-# Arrange plots in a single row using patchwork
-combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_layout(ncol = 3)
-
-# # Save the plot as EPS file
-output_path_plot <- "figures/change_box_amyloid_plot.eps"
-ggsave(output_path_plot, plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
-
-# Print the combined box plots
-print(combined_plot_box)
+# Print the metadata to the console
+print(combined_metadata)

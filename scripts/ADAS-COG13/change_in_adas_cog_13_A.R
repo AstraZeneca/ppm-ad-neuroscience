@@ -68,7 +68,7 @@ p <- ggplot(new_table_ad_filtered_all, aes(x = time_point, y = ADAS, group = Tre
 print(p)
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/ADAS-Cog13_plot.eps"
+output_path_plot <- "figures/FigureS1_A.eps"
 ggsave(output_path_plot, plot = p, device = "eps", width = 14, height = 7, family = "serif")
 
 # Calculate means and standard errors
@@ -81,7 +81,7 @@ summary_table <- new_table_ad_filtered_all %>%
   arrange(ad_category, Treatment_Information, time_point)
 
 # Save summary table as CSV
-output_path_table <- "figures/ADAS-Cog13_summary_table.csv"
+output_path_table <- "figures/FigureS1_A.csv"
 write.csv(summary_table, file = output_path_table, row.names = FALSE)
 
 # Print the summary table

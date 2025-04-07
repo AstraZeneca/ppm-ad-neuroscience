@@ -79,7 +79,7 @@ combined_data_adas <- data.frame(
 )
 
 # Specify the output file path
-output_path <- "figures/summary_ADAS-Cog13_change.csv"
+output_path <- "figures/FigureS1_B_BarPlot.csv"
 
 # Write combined_data to CSV
 write.csv(combined_data_adas, file = output_path, row.names = FALSE)
@@ -131,7 +131,7 @@ plot_rapid <- plot_category("Rapid")
 plot_entire <- plot_category("All Progressive")
 combined_plot <- plot_slow + plot_rapid + plot_entire + plot_layout(ncol = 3)
 
-ggsave("figures/change_bar_ADAS-Cog13_plot.eps", plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
+ggsave("figures/FigureS1_B_BarPlot.eps", plot = combined_plot, device = "eps", width = 14, height = 7, family = "serif")
 print(combined_plot)
 
 # Function to create box plots
@@ -168,5 +168,41 @@ plot_rapid_box <- plot_category_boxplot(df_combined, "Rapid")
 plot_entire_box <- plot_category_boxplot(df_combined, "All Progressive")
 combined_plot_box <- plot_slow_box + plot_rapid_box + plot_entire_box + plot_layout(ncol = 3)
 
-ggsave("figures/change_box_ADAS-Cog13_plot.eps", plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
+ggsave("figures/FigureS1_B.eps", plot = combined_plot_box, device = "eps", width = 14, height = 7, family = "serif")
 print(combined_plot_box)
+
+# Function to calculate box plot metadata
+calculate_boxplot_metadata <- function(data, ad_category) {
+  # Filter data for the specific category
+  data_to_plot <- na.omit(data[data$ad_category_1 == ad_category, ])
+  
+  # Calculate statistics for each treatment group
+  metadata <- data_to_plot %>%
+    group_by(Treatment_Information_1) %>%
+    summarise(
+      Median = median(ADAS_change),
+      Q1 = quantile(ADAS_change, 0.25),
+      Q3 = quantile(ADAS_change, 0.75),
+      Lower_Whisker = max(min(ADAS_change), Q1 - 1.5 * IQR(ADAS_change)),
+      Upper_Whisker = min(max(ADAS_change), Q3 + 1.5 * IQR(ADAS_change)),
+      Outliers = paste(ADAS_change[ADAS_change < Q1 - 1.5 * IQR(ADAS_change) | ADAS_change > Q3 + 1.5 * IQR(ADAS_change)], collapse = ";")
+    )
+  
+  # Add the category to the metadata
+  metadata$Ad_Category <- ad_category
+  return(metadata)
+}
+
+# Calculate metadata for each category
+metadata_slow <- calculate_boxplot_metadata(df_combined, "Slow")
+metadata_rapid <- calculate_boxplot_metadata(df_combined, "Rapid")
+metadata_all <- calculate_boxplot_metadata(df_combined, "All Progressive")
+
+# Combine metadata for all categories
+combined_metadata <- bind_rows(metadata_slow, metadata_rapid, metadata_all)
+
+# Save metadata to a CSV file
+write.csv(combined_metadata, "figures/FigureS1_B.csv", row.names = FALSE)
+
+# Print the metadata to the console
+print(combined_metadata)

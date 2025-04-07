@@ -64,7 +64,7 @@ p <- ggplot(new_table_cdr_filtered_all, aes(x = time_point, y = CDR_SOB, group =
 print(p)
 
 # # Save the plot as EPS file
-output_path_plot <- "figures/CDR-SOB_plot.eps"
+output_path_plot <- "figures/Figure4_A.eps"
 ggsave(output_path_plot, plot = p, device = "eps", width = 14, height = 7, family = "serif")
 
 # Calculate means and standard errors
@@ -77,9 +77,8 @@ summary_table <- new_table_cdr_filtered_all %>%
   arrange(ad_category, Treatment_Information, time_point)
 
 # Save summary table as CSV
-output_path_table <- "figures/CDR-SOB_summary_table.csv"
+output_path_table <- "figures/Figure4_A.csv"
 write.csv(summary_table, file = output_path_table, row.names = FALSE)
 
 # Print the summary table
 print(summary_table)
-
