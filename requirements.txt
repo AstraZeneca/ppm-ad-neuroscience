@@ -1,4 +1,4 @@
-pandas
-plotly
-matplotlib
-kaleido
+pandas==1.1.5
+plotly==5.4.0
+matplotlib==3.3.4
+kaleido==0.2.1
