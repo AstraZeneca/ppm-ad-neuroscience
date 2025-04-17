@@ -16,10 +16,10 @@ Alzheimer’s Disease (AD) drug discovery has been hampered by patient heterogen
 
 To run the code in this repository, you will need the following software and libraries:
 
-- **Python**: Version 3.8 or higher
-  - Required libraries: `numpy`, `pandas`, `scikit-learn`, `matplotlib`, `seaborn`, `tensorflow` (if applicable)
+- **Python**: Version 3.10 or higher
+  - Required libraries: "pandas", "matplotlib", "plotly", "kaleido"
 - **R**: Version 4.0 or higher
-  - Required packages: `ggplot2`, `dplyr`, `tidyr`, `caret`, `survival`
+  - Required packages: "lme4", "mmrm", "sjPlot", "lmerTest", "pbkrtest", "nlme", "patchwork", "pwr", "ggplot2", "dplyr", "emmeans", "lsmeans"
 
 Ensure all dependencies are installed before running the scripts.
 
